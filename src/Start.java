@@ -1,6 +1,8 @@
+import Garage.Garage;
 import Veicolo.Furgone;
 import Veicolo.Macchina;
 import Veicolo.Moto;
+import Veicolo.VeicoloAMotore;
 
 public class Start {
 
@@ -17,6 +19,18 @@ public class Start {
         Moto moto1 = new Moto ("Honda",2020,600, 2);
         Moto moto2 = new Moto("Yamaha", 2018,750,4);
         Moto moto3 = new Moto("Aprilia", 2022, 1000,4);
+
+        Garage garage = new Garage();
+
+        garage.parcheggiaVeicolo(macchina1);
+        garage.parcheggiaVeicolo(furgone1);
+        garage.parcheggiaVeicolo(moto1);
+
+        garage.rimuoviVeicolo(macchina1);
+
+        for(VeicoloAMotore veicolo : garage.getMyGarage()){
+            System.out.println("Il posto " + garage.getMyGarage().indexOf(veicolo)+ " e' occupato da " + veicolo.getInfoVeicoli());
+        }
 
     }
 }

@@ -1,43 +1,74 @@
 package Garage;
-import Veicolo.VeicoloAMotore;
-import java.util.ArrayList;
-import java.util.List;
+import Entita.VeicoloAMotore;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Garage {
-    private List<VeicoloAMotore> myGarage = new ArrayList<>() ;
+
+public class Garage{
+
+    private static Garage garage = new Garage();
     private final int maxPosti = 15;
+    private static int postiOccupati = 0;
 
-    public List<VeicoloAMotore> getMyGarage() {
-        return myGarage;
-    }
+    private Map<Parcheggio, VeicoloAMotore> myGarage = new HashMap<>();
+    private Garage(){}
 
-    public void setMyGarage(List<VeicoloAMotore> myGarage) {
-        this.myGarage = myGarage;
-    }
-
-    public int getMaxPosti() {
+    public int getMaxPosti(){
         return maxPosti;
     }
 
+    public static int getPostiOccupati(){
+        return postiOccupati;
+    }
+
+    public static void setPostiOccupati(int postiOccupati){
+        Garage.postiOccupati = postiOccupati;
+    }
+
+    public Map<Parcheggio, VeicoloAMotore> getMyGarage(){
+        return myGarage;
+    }
+
+    public void setMyGarage(Map<Parcheggio,VeicoloAMotore> myGarage){
+        this.myGarage = myGarage;
+    }
+    public static Garage getIstance(){
+        return garage;
+    }
+
     /**
-     * This method takes a vehicle as parameter and it adds it to the garage(list)
-     * If the garage is full it won't add the vehicle but it will print an error message
-     * @param veicoloAMotore the vehicle that we are working with
+     * Il metodo aggiungerà un veicolo nel caso che il parcheggio sia libero
+     * @param parcheggio è lo slot dove verrà allocato il veicolo
+     * @param veicoloAMotore è il veicolo che deve essere allocato
      */
-    public void parcheggiaVeicolo (VeicoloAMotore veicoloAMotore) {
-        if(myGarage.size()<=maxPosti) {
-            myGarage.add(veicoloAMotore);
+    public void parcheggiaVeicolo(Parcheggio parcheggio,VeicoloAMotore veicoloAMotore){
+        if(parcheggio.getStatoParcheggio() == StatoParcheggioEnum.LIBERO && postiOccupati < maxPosti){
+            myGarage.put(parcheggio,veicoloAMotore);
+            postiOccupati += 1;
+            parcheggio.setStatoParcheggio(StatoParcheggioEnum.OCCUPATO);
         } else {
-            System.out.println("Error : the garage is full");
+            System.out.println("Errore: "+parcheggio.getSlotParcheggio()+" è già occupato");
         }
     }
+
     /**
-     * This method takes a vehicle as parameter and it removes it from the garage
-     * Then it returns the vehicle
-     * @param veicoloAMotore the vehicle that we are working with
+     * Questo metodo rimuoverà un veicolo in caso s
+     * @param parcheggio
+     * @param veicoloAMotore
+     * @return
      */
-    public VeicoloAMotore rimuoviVeicolo(VeicoloAMotore veicoloAMotore){
-        myGarage.remove(getMyGarage().indexOf(veicoloAMotore));
+    public VeicoloAMotore rimuoviVeicolo(Parcheggio parcheggio,VeicoloAMotore veicoloAMotore){
+        if(parcheggio.getStatoParcheggio() == StatoParcheggioEnum.LIBERO){
+            System.out.println(parcheggio.getSlotParcheggio()+" è già libero");
+        } else if(!( myGarage.get(parcheggio).equals(veicoloAMotore))){
+            System.out.println("Errore: il veicolo non corrisponde a quello da lei richiesto");
+        } else {
+            myGarage.remove(parcheggio,veicoloAMotore);
+            parcheggio.setStatoParcheggio(StatoParcheggioEnum.LIBERO);
+            postiOccupati -= 1;
+            System.out.println("Il "+veicoloAMotore.getInfoVeicoli()+" è stato rimosso dal parcheggio n: "
+                                       +parcheggio.getSlotParcheggio());
+        }
         return veicoloAMotore;
     }
 }

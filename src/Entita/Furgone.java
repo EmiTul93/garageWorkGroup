@@ -1,4 +1,4 @@
-package Veicolo;
+package Entita;
 
 public class Furgone extends VeicoloAMotore{
     private int capacita;
@@ -19,5 +19,7 @@ public class Furgone extends VeicoloAMotore{
     public void setCapacita(int capacita){
         this.capacita = capacita;
     }
+
+
 
 }

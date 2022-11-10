@@ -1,4 +1,4 @@
-package Veicolo;
+package Entita;
 
 public class Macchina extends VeicoloAMotore{
 

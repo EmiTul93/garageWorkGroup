@@ -1,6 +1,6 @@
-package Veicolo;
+package Entita;
 
-public class Moto extends VeicoloAMotore {
+public class Moto extends VeicoloAMotore{
 
     private int tempi;
 

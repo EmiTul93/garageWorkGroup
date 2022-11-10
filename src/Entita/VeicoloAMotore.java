@@ -1,7 +1,7 @@
-package Veicolo;
+package Entita;
 
 
-    public abstract class VeicoloAMotore {
+public abstract class VeicoloAMotore{
         private String marca;
         private int anno;
         private double cilindrata;
@@ -38,7 +38,7 @@ package Veicolo;
 
 
         public String getInfoVeicoli(){
-            return "Il veicolo e' "+ marca +", dell'anno "+anno+",  con una cilindrata di "+cilindrata;
+            return "Veicolo :"+ marca +", dell'anno "+anno+",  con una cilindrata di "+cilindrata;
         }
     }
 
